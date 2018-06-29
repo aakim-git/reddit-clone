@@ -1,0 +1,18 @@
+<!-- the base.html is the GLOBAL header/library for ALL templates in this app. -->
+
+
+<html>
+    <head>
+        {% block head %} <!-- "blocks" will be overridden --> <!-- jinja notation-->
+            <title>BASE</title>
+        {% endblock %}
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+    </head>
+    <body>
+        {% block body %}
+            <h1> base </h1><!--  to check if base is working properly-->
+        {% endblock %}
+    </body>
+
+</html>
