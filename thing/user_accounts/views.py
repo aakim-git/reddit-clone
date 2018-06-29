@@ -6,7 +6,7 @@ from django.shortcuts import HttpResponse
 def home(request):
     # you would usually pull these variables from a database. 
     numbers = {1,2,3,4}
-    name = "ASD DDD"
+    name = "bob BOBBINGTON >:("
 
 
     # this implicitely loads the '/template/user_accounts/login.html'

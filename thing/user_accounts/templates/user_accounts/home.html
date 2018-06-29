@@ -1,16 +1,11 @@
-{% extends 'base.html' %}
-<html>
-    <head>
-        {% block head%} <!-- extends base.html. This OVERRIDES the block head in the base-->
-            <title> HOME D:</title>
-        {% endblock %}
-    </head>
+{% extends 'base.html' %} <!-- we don't need anything that is in the base.html-->
+    {% block head%} <!-- extends base.html. This OVERRIDES the block head in the base-->
+        <title> HOME D:</title>
+    {% endblock %}
     
-    <body>
-        {% block body %}
-            <h1>this is home base</h1>
-        {% endblock %}
-    </body>
-</html>
+    {% block body %}
+        <h1>this is home base</h1>
+    {% endblock %}
+
 
 
