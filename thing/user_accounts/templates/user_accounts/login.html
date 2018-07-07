@@ -7,9 +7,7 @@
 
 {% block body %}
     <div class="container">
-        <h1>Login plz >:(</h1>
-        <button class="btn btn-default" type="button" name="button">click PLEASE</button>
-        <h1>Hello {{ name }}</h1>
+        <h1> Welcome >:( </h1>
         <form method= "post">
             {% csrf_token %} <!-- is included in every form-->
             {{ form.as_p }} <!-- (form as paragraph) this form is from the imported login view. -->

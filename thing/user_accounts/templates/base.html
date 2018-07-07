@@ -1,15 +1,32 @@
-<!-- the base.html is the GLOBAL header/library for ALL templates in this app. -->
+﻿<!-- the base.html is the GLOBAL header/library for ALL templates in this app. -->
 
 
 <html>
     <head>
-        {% block head %} <!-- "blocks" will be overridden --> <!-- jinja notation-->
+        {% block head %} <!-- "block"s will be overridden --> <!-- jinja notation-->
             <title>BASE</title>
         {% endblock %}
         <meta charset="utf-8">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
     </head>
     <body>
+
+        <!-- NavBar -->
+        <div>
+            <div class="container">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
+                    <a class="navbar-brand" href="#">Facebook LUL</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                        <ul class="navbar-nav ml-auto">
+                            <li><a href="../register/">Register</a></li>
+                        </ul>
+                </nav>
+            </div>
+        <!-- NavBar -->
+
         {% block body %}
             <h1> base </h1><!--  to check if base is working properly-->
         {% endblock %}
