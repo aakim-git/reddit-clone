@@ -5,14 +5,13 @@
 {% endblock %}
 
 {% block body %}
-<div class="container">
-    <h1>Profile Page</h1>
-    <p>
-        Username: {{user.username}} <br />
-        Name: {{user.first_name}} {{user.last_name}}<br />
-        Email: {{user.email}}
-    </p>
-    <button>Eidt</button>
-</div>
-
+    <div class="container">
+        <h1>Profile Page</h1>
+        <p>
+            Username: {{user.username}} <br />
+            Name: {{user.first_name}} {{user.last_name}}<br />
+            Email: {{user.email}}<br />
+        </p>
+        <a href="/user_accounts/profile/edit">Edit</a>
+    </div>
 {% endblock %}

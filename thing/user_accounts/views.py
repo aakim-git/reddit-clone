@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.shortcuts import HttpResponse
-from user_accounts.forms import RegistrationForm
+from user_accounts.forms import RegistrationForm, EditProfileForm
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserChangeForm
+from django.contrib.auth.decorators import login_required
+
 
 # There are custom views.
 # function based view
@@ -29,20 +30,22 @@ def register(request):
             form.save() #saves into database
             return redirect('/user_accounts/')
 
+@login_required
 def profile(request):
     args = {'user': request.user} #if a user is logged in, we pass in that whole user object (password, email, etc. )
     return render(request, 'user_accounts/profile.html', args)
 
+@login_required
 def edit_profile(request):
     if request.method == 'POST':
-        form = UserChangeForm(request.POST, instance  = request.user)
+        form = EditProfileForm(request.POST, instance  = request.user)
 
         if form.is_valid():
             form.save()
             return redirect('/user_accounts/profile')
 
     elif request.method == 'GET':
-        form = UserChangeForm(instance= request.user)
+        form = EditProfileForm(instance= request.user)
         args = {'form':form}
         return render(request, 'user_accounts/edit_profile.html', args)
 

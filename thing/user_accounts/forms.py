@@ -1,7 +1,7 @@
 #these are custom forms if we don't want the default login, etc. forms
 from django import forms
 from django.contrib.auth.models import User #this is the default hashed username, password info, etc. 
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
 #this is python inheritance. We are just extending the default User Form
 class RegistrationForm(UserCreationForm):
@@ -12,10 +12,10 @@ class RegistrationForm(UserCreationForm):
         fields = {'username',
                   'first_name', 
                   'last_name', 
-                  'email', 
-                  'password1',
-                  'password2'
+                  'password1', 
+                  'password2',
                   } #password1 & 2 are for the verifying password thing. 
+       
 
     def save(self, commit = True):
         user = super(RegistrationForm, self).save(commit = False) #if the user is not finished completing the form, you save the data. 
@@ -29,3 +29,14 @@ class RegistrationForm(UserCreationForm):
         return user
 
 
+
+class EditProfileForm(UserChangeForm):
+    class Meta:
+        model = User
+        fields = {
+                'email',
+                'first_name',
+                'last_name',
+                'password',
+                }
+        #exclude = {}
