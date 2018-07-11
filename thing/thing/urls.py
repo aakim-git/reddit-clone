@@ -16,8 +16,11 @@ Including another URLconf
 from django.conf.urls import url
 from django.conf.urls import include
 from django.contrib import admin
+from . import views
 
 urlpatterns = [
+    url(r'^$', views.login_redirect, name = 'login_redirect'),
+    
     url(r'^admin/', admin.site.urls),
     url(r'^user_accounts/', include('user_accounts.urls')), #when we go to user_accounts/, it loads the url file in that app. 
 ]
