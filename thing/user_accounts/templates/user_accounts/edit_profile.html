@@ -1,16 +1,15 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Register</title>
+<title>Edit</title>
 {% endblock %}
 
 {% block body %}
 <div class="container">
-    <h1>Register!</h1>
     <form method="post">
+        {{ form.as_p }}
         {% csrf_token %}
-        {{ form.as_p }} <!--we pass in 'form' as parameter-->
-        <button type="submit">Register</button>
+        <button type="submit">Submit</button>
     </form>
 </div>
 

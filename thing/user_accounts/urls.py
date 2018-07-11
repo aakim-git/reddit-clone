@@ -10,7 +10,8 @@ urlpatterns = [
         #at url .../login, we load the view "login", with our custom template login.html
         url(r'^logout/$', logout, {'template_name': 'user_accounts/logout.html'}), #again, the view 'logout' is from the imported library. 
         url(r'^register/$', views.register),
-        
+        url(r'^profile.$', views.profile, name = 'profile'),
+        url(r'^profile/edit/$', views.edit_profile, name = 'edit_profile') 
 ]
 
 
