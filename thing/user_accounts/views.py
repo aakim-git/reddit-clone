@@ -30,12 +30,10 @@ def register(request):
             form.save() #saves into database
             return redirect('/user_accounts/')
 
-@login_required
 def profile(request):
     args = {'user': request.user} #if a user is logged in, we pass in that whole user object (password, email, etc. )
     return render(request, 'user_accounts/profile.html', args)
 
-@login_required
 def edit_profile(request):
     if request.method == 'POST':
         form = EditProfileForm(request.POST, instance  = request.user)

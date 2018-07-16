@@ -48,6 +48,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'thing.middleware.LoginRequiredMiddleware',
 ]
 
 ROOT_URLCONF = 'thing.urls'
@@ -120,4 +121,13 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-LOGIN_REDIRECT_URL = '/user_accounts/' #for the default login library, we make a custom url once login is submitted. 
+LOGIN_URL = '/user_accounts/login/'
+
+LOGIN_EXEMPT_URLS = {
+        r'^user_accounts/login/$',
+        r'^user_accounts/logout/$',
+        r'^user_accounts/$',
+        r'^user_accounts/register/$',
+	r'^$',
+}
+
