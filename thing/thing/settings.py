@@ -123,6 +123,9 @@ STATIC_URL = '/static/'
 
 LOGIN_URL = '/user_accounts/login/'
 
+# For the default Django Login view
+LOGIN_REDIRECT_URL = '/user_accounts/'
+
 LOGIN_EXEMPT_URLS = {
         r'^user_accounts/login/$',
         r'^user_accounts/logout/$',

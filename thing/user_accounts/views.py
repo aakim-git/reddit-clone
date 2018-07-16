@@ -3,19 +3,17 @@ from django.shortcuts import HttpResponse
 from user_accounts.forms import RegistrationForm, EditProfileForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-
+from django.urls import reverse
 
 # There are custom views.
 # function based view
 def home(request):
     # you would usually pull these variables from a database. 
     numbers = {1,2,3,4}
-    name = "bob BOBBINGTON >:("
-
 
     # this implicitely loads the '/template/user_accounts/login.html'
     # you can also pass in a variable list of information.
-    args = {'name': name, 'numbers': numbers}
+    args = {'numbers': numbers}
     return render(request, 'user_accounts/home.html', args)
 
 def register(request):
@@ -28,7 +26,7 @@ def register(request):
         form = RegistrationForm(request.POST) #request from parameter ; custom form as defined in forms.py
         if form.is_valid(): #kind of the default django requirements
             form.save() #saves into database
-            return redirect('/user_accounts/')
+            return redirect(reverse('user_accounts:home'))
 
 def profile(request):
     args = {'user': request.user} #if a user is logged in, we pass in that whole user object (password, email, etc. )
@@ -40,7 +38,7 @@ def edit_profile(request):
 
         if form.is_valid():
             form.save()
-            return redirect('/user_accounts/profile')
+            return redirect(reverse('user_accounts:profile'))
 
     elif request.method == 'GET':
         form = EditProfileForm(instance= request.user)

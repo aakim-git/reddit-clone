@@ -19,8 +19,8 @@ from django.contrib import admin
 from . import views
 
 urlpatterns = [
-    url(r'^$', views.login_redirect, name = 'login_redirect'),
+    url(r'^$', views.login_redirect, name = 'login_redirect'), # when you go to empty url, it will redirect to home 
    
     url(r'^admin/', admin.site.urls),
-    url(r'^user_accounts/', include('user_accounts.urls')), #when we go to user_accounts/, it loads the url file in that app. 
+    url(r'^user_accounts/', include('user_accounts.urls', namespace = 'user_accounts')), #this url sets up all the urls in the user_accounts app.  
 ]
