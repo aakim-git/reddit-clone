@@ -19,8 +19,10 @@ from django.contrib import admin
 from . import views
 
 urlpatterns = [
-    url(r'^$', views.login_redirect, name = 'login_redirect'), # when you go to empty url, it will redirect to home 
-   
+    url(r'^$', views.home_redirect, name = 'home_redirect'), # when you go to empty url, it will redirect to home 
+
     url(r'^admin/', admin.site.urls),
-    url(r'^user_accounts/', include('user_accounts.urls', namespace = 'user_accounts')), #this url sets up all the urls in the user_accounts app.  
+    url(r'^user_accounts/', include('user_accounts.urls', namespace = 'user_accounts')), #this url sets up all the urls in the user_accounts app. 
+    url(r'^home/', include('home.urls', namespace = 'home')),
 ]
+

@@ -12,6 +12,9 @@ class UserProfile(models.Model):
     email = models.URLField(default = '')
     phone = models.IntegerField(default = 0)
 
+    def __str__(self):
+        return self.user.username
+
 # whenever we create a "User", a "UserProfile" is also created
 def create_profile(sender, **kwargs):
     if kwargs['created']:

@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from django.shortcuts import HttpResponse
 from user_accounts.forms import RegistrationForm, EditProfileForm
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 
 # There are custom views.
