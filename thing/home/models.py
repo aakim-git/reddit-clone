@@ -5,4 +5,6 @@ from django.contrib.auth.models import User
 class Post(models.Model):
     post = models.CharField(max_length = 500)
     user = models.ForeignKey(User)
-    date = models.DateTimeField(auto_now = True) #saves date on creation
+    created = models.DateTimeField(auto_now_add = True) #saves date on creation
+    updated = models.DateTimeField(auto_now = True) # saves date on update
+

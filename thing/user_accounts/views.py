@@ -31,8 +31,14 @@ def register(request):
 
 
 
-def profile(request):
-    args = {'user': request.user} #if a user is logged in, we pass in that whole user object (password, email, etc. )
+def profile(request, pk = None): #pk's default value makes it optional
+    if pk:
+        user = User.objects.get(pk = pk) #retrieves from database that matches primary key. 
+
+    else:
+        user = request.user #this is refers to the logged in user. 
+
+    args = {'user': user} #if a user is logged in, we pass in that whole user object (password, email, etc. )
     return render(request, 'user_accounts/profile.html', args)
 
 def edit_profile(request):

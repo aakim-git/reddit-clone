@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from home.forms import HomeForm
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 from home.models import Post
 # Create your views here.
@@ -12,8 +13,9 @@ from home.models import Post
 def home_view(request):
     if request.method == 'GET':
         form = HomeForm()
-        posts = Post.objects.all() # retrieves all 'Post' objects from the database. 
-        args = {'form':form, 'posts':posts}# we now want to pass the Posts to the template 
+        posts = Post.objects.all().order_by('created') # retrieves all 'Post' objects from the database. 
+        users = User.objects.all()
+        args = {'form':form, 'posts':posts, 'users':users}# we now want to pass the Posts to the template 
         return render(request, 'home/home.html', args)
 
     elif request.method == 'POST':

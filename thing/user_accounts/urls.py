@@ -11,6 +11,7 @@ urlpatterns = [
         url(r'^logout/$', logout, {'template_name': 'user_accounts/logout.html'}, name = 'logout'), #again, the view 'logout' is from the imported library. 
         url(r'^register/$', views.register, name = 'register'),
         url(r'^profile/$', views.profile, name = 'profile'),
+        url(r'^profile/(?P<pk>\d+)/$', views.profile, name = 'profile_with_pk'),
         url(r'^profile/edit/$', views.edit_profile, name = 'edit_profile') 
 ]
 

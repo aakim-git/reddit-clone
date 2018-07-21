@@ -5,19 +5,30 @@
 {% endblock %}
 
 {% block body %}
-    <div class="container">
-        <h1> TRUE home base </h1>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Submit</button>
-        </form>
+    <div class="row container">
+        <div class="col-md-8">
+            <h1> TRUE Home </h1>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.post }} <!-- As opposed to as_p, which also renders an ugly 'post' marker -->
+                <br />
+                <button type="submit">Submit</button>
+            </form>
 
-        <!-- Since we passed in the 'Posts' from views, we can iterate through them -->
-        {% for post in posts %}
-            <!-- post and date are fields of the model 'Post' found in models.py-->
-            <h1> {{post.post}} </h1>
-            <p> {{post.date}} </p>
-        {% endfor %}
+            <!-- Since we passed in the 'Posts' from views, we can iterate through them -->
+            {% for post in posts %}
+                <!-- post and date are fields of the model 'Post' found in models.py-->
+                <h1> {{post.post}} </h1>
+                <p> {{post.created}} </p>
+            {% endfor %}
+        </div>
+
+        <div class="col-md-4">
+            <h1>Other Users</h1>
+            {% for user in users %}
+                <a href="{% url 'user_accounts:profile_with_pk' pk=user.pk %}"><h2>{{ user.username }}</h2></a>  
+            {% endfor %}
+        </div>
+
     </div>
 {% endblock %}
