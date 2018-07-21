@@ -14,7 +14,7 @@ def home_view(request):
     if request.method == 'GET':
         form = HomeForm()
         posts = Post.objects.all().order_by('created') # retrieves all 'Post' objects from the database. 
-        users = User.objects.all()
+        users = User.objects.exclude(id=request.user.id)
         args = {'form':form, 'posts':posts, 'users':users}# we now want to pass the Posts to the template 
         return render(request, 'home/home.html', args)
 
