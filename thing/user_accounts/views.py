@@ -15,6 +15,8 @@ def home(request):
     args = {'numbers': numbers}
     return render(request, 'user_accounts/home.html', args)
 
+
+
 def register(request):
     if request.method == 'GET': #User's first time in the register page
         form = RegistrationForm()
@@ -26,6 +28,8 @@ def register(request):
         if form.is_valid(): #kind of the default django requirements
             form.save() #saves into database
             return redirect(reverse('user_accounts:home'))
+
+
 
 def profile(request):
     args = {'user': request.user} #if a user is logged in, we pass in that whole user object (password, email, etc. )
