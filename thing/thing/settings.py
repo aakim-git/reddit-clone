@@ -25,7 +25,7 @@ SECRET_KEY = 'x=y)fl^x31f)ekx!+-yfad&f2ll()!&&8sk)(groz9q0ozhs9j'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [http://qwee.pythonanywhere.com/]
 
 
 # Application definition
@@ -132,6 +132,7 @@ LOGIN_EXEMPT_URLS = {
         r'^user_accounts/logout/$',
         r'^user_accounts/$',
         r'^user_accounts/register/$',
+        r'^home/$',
 	r'^$',
 }
 

@@ -19,7 +19,7 @@
             {% for post in posts %}
                 <!-- post and date are fields of the model 'Post' found in models.py-->
                 <h1> {{post.post}} </h1>
-                <p> {{post.created}} </p>
+                <p> Created by: {{post.user.username}} at {{post.created}} </p>
             {% endfor %}
         </div>
 

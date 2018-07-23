@@ -14,6 +14,8 @@
             Description: {{user.UserProfile.description}}<br />
             Phone: {{user.UserProfile.phone}}<br />
         </p>
-        <a href="/user_accounts/profile/edit">Edit</a>
+        {% if not cur_user %}
+            <a href="/user_accounts/profile/edit">Edit</a>
+        {% endif %}
     </div>
 {% endblock %}

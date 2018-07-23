@@ -38,7 +38,7 @@ def profile(request, pk = None): #pk's default value makes it optional
     else:
         user = request.user #this is refers to the logged in user. 
 
-    args = {'user': user} #if a user is logged in, we pass in that whole user object (password, email, etc. )
+    args = {'user': user, 'cur_user':pk} #if a user is logged in, we pass in that whole user object (password, email, etc. )
     return render(request, 'user_accounts/profile.html', args)
 
 def edit_profile(request):
