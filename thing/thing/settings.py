@@ -25,7 +25,7 @@ SECRET_KEY = 'x=y)fl^x31f)ekx!+-yfad&f2ll()!&&8sk)(groz9q0ozhs9j'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['http://qwee.pythonanywhere.com/']
+ALLOWED_HOSTS = ['127.0.0.1','http://qwee.pythonanywhere.com/']
 
 
 # Application definition
