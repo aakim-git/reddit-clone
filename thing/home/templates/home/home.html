@@ -1,34 +1,72 @@
-{% extends 'base.html' %} <!-- This is the base.html from the 'user_accounts' app -->
-
-{% block head %} <!-- "block"s will be overridden --> <!-- jinja notation-->
+{% extends 'base.html' %} <!-- base.html from 'user_accounts' app -->
+{% block head %} 
     <title>Facebook LUL</title>
+    <style>
+        /* 9%, 5% */
+        .rank {
+            background-color: #c0c0c0;
+            height: 60px;
+            width: 36px;
+        }
+
+        .votes * {
+            background-color: #e1e1e1;
+            height: 31px;
+            width: 25px;
+            padding: 9px 0 0 6px;
+            font-size: 13px;
+        }
+
+        .upvote {
+            border-radius: 5px 5px 0 0;
+        }
+
+        .downvote {
+            border-radius: 0 0 5px 5px;
+        }
+    </style>
+
+    {% load static %}
+    <script type="text/javascript" src="{% static 'home/vote_buttons.js' %}"></script>
+
 {% endblock %}
+
+
 
 {% block body %}
-    <div class="row container">
-        <div class="col-md-8">
-            <h1> TRUE Home </h1>
-            <form method="post">
-                {% csrf_token %}
-                {{ form.post }} <!-- As opposed to as_p, which also renders an ugly 'post' marker -->
-                <br />
-                <button type="submit">Submit</button>
-            </form>
+    <div class="container">
+        <div class="content row pt-4">
+            <div class="col-md-8">
+                {% for post in posts %}
+                <div class="row container">
+                    <div class="rank col-xx-1 rounded mt-2">
+                        <div class="text-white text-center mx-auto mt-3">{{ post.points }}</div>
+                    </div>
 
-            <!-- Since we passed in the 'Posts' from views, we can iterate through them -->
-            {% for post in posts %}
-                <!-- post and date are fields of the model 'Post' found in models.py-->
-                <h1> {{post.post}} </h1>
-                <p> Created by: {{post.user.username}} at {{post.created}} </p>
-            {% endfor %}
+                    
+
+                    <div class="entry col-md-10" style="border-left: 2px solid #95b2d6">
+                        <h3 style="font-size:1.5em" class="text-primary mb-0"> <a href="{% url 'home:post' post_id=post.post_id %}">{{post.title}}</a> </h3>
+                        <p class="mb-0" style="font-size:0.8em"> submitted by: <a href="{% url 'user_accounts:profile_with_pk' pk=post.user.pk %}">{{ post.user.username }}</a>   at {{post.created}} </p>
+                        <p style="font-size:0.8em"> 0 comments</p>
+                    </div>
+                </div>
+
+                <div>&nbsp;</div>
+
+                {% endfor %}
+
+                <div><a href="#">next</a></div>
+                <div style="height:200px;">&nbsp;</div>
+            </div>
+
+
+            <div class="col-md-4">
+                <h3 style="font-size:1.3em; border-left: 2px solid #95b2d6" class="text-primary pl-4"><a href="{% url 'home:create_post' %}">Submit a Post</a></h3>
+            </div>
+
         </div>
-
-        <div class="col-md-4">
-            <h1>Other Users</h1>
-            {% for user in users %}
-                <a href="{% url 'user_accounts:profile_with_pk' pk=user.pk %}"><h2>{{ user.username }}</h2></a>  
-            {% endfor %}
-        </div>
-
     </div>
 {% endblock %}
+
+

@@ -4,30 +4,26 @@ from user_accounts.forms import RegistrationForm, EditProfileForm
 from django.contrib.auth.models import User
 from django.urls import reverse
 
-# There are custom views.
-# function based view
 def home(request):
-    # you would usually pull these variables from a database. 
-    numbers = {1,2,3,4}
-
-    # this implicitely loads the '/template/user_accounts/login.html'
-    # you can also pass in a variable list of information.
-    args = {'numbers': numbers}
+    args = {}
     return render(request, 'user_accounts/home.html', args)
 
 
 
 def register(request):
-    if request.method == 'GET': #User's first time in the register page
+    if request.method == 'GET':
         form = RegistrationForm()
         args = {'form': form}
         return render(request, 'user_accounts/register.html', args)
 
-    elif request.method == 'POST': #user is sending info to server
-        form = RegistrationForm(request.POST) #request from parameter ; custom form as defined in forms.py
-        if form.is_valid(): #kind of the default django requirements
-            form.save() #saves into database
-            return redirect(reverse('user_accounts:home'))
+    elif request.method == 'POST': 
+        form = RegistrationForm(request.POST) 
+        if form.is_valid(): 
+            form.save() 
+            return redirect(reverse('home:home'))
+			
+        else:
+            return HttpResponse('Error ?')
 
 
 

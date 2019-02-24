@@ -1,17 +1,15 @@
-<!-- we imported the login library from DJango-->
 {% extends 'base.html' %}
-
 {% block head %}
     <title>Login</title>
 {% endblock %}
 
 {% block body %}
     <div class="container">
-        <h1> Welcome >:( </h1>
+        <h1> Welcome!</h1>
         <form method= "post">
-            {% csrf_token %} <!-- is included in every form-->
-            {{ form.as_p }} <!-- (form as paragraph) this form is from the imported login view. -->
-            <button type= "submit" name=" button">Login</button> <!-- this completes the form once pressed-->
+            {% csrf_token %} 
+            {{ form.as_p }} 
+            <button type= "submit" name=" button">Login</button> 
         </form>
     </div>
 {% endblock %}

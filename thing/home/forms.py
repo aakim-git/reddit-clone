@@ -1,16 +1,28 @@
 from django import forms
-from home.models import Post
+from home.models import Post, Comment
 
-class HomeForm(forms.ModelForm):
-    post = forms.CharField(widget = forms.TextInput(
-        attrs = {
-            'class': 'form-control',
-            'placeholder': 'Write a Post!'
-        }
-    )) # this is how to add html to forms
-    
+class create_post_form(forms.ModelForm):
+    title = forms.CharField(max_length = 100)
+    post = forms.CharField(max_length = 5000, widget = forms.Textarea())
+    link = forms.CharField(max_length = 100, required = False)
+   
     class Meta:
-        model = Post  # this is the model the modelForm is associated with
-        fields = ('post',) # the comma is necessary to make it a tuple
+        model = Post  
+        fields = {
+            'title',
+            'post',
+            'link',
+        } 
+
+
+class submit_comment_form(forms.ModelForm):
+    text = forms.CharField(max_length = 5000)
+   
+    class Meta:
+        model = Comment  
+        fields = {
+			'text'
+		} 
+
 
 
