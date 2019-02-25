@@ -1,6 +1,6 @@
 {% extends 'base.html' %} <!-- base.html from 'user_accounts' app -->
 {% block head %} 
-    <title>Facebook LUL</title>
+    <title>"Reddit"</title>
     <style>
         /* 9%, 5% */
         .rank {
@@ -37,13 +37,17 @@
     <div class="container">
         <div class="content row pt-4">
             <div class="col-md-8">
-                {% for post in posts %}
+                {% for post,vote in posts %}
                 <div class="row container">
                     <div class="rank col-xx-1 rounded mt-2">
                         <div class="text-white text-center mx-auto mt-3">{{ post.points }}</div>
                     </div>
 
-                    
+                    <div class="votes col-sm-1 d-inline-flex flex-column mt-2">
+                        <i onclick="upvote(this.parentNode, {{ post.post_id }}, {{cur_user}})" class="upvote fa fa-arrow-up mx-auto" aria-hidden="true"></i>
+                        <i onclick="downvote(this.parentNode, {{ post.post_id }}, {{cur_user}})" class="downvote fa fa-arrow-down mx-auto" aria-hidden="true"></i>
+                        <script>update_vote(document.currentScript.parentNode, {{vote}} )</script>
+                    </div>
 
                     <div class="entry col-md-10" style="border-left: 2px solid #95b2d6">
                         <h3 style="font-size:1.5em" class="text-primary mb-0"> <a href="{% url 'home:post' post_id=post.post_id %}">{{post.title}}</a> </h3>
