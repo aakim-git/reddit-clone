@@ -1,0 +1,18 @@
+{% extends 'base.html' %} <!-- base.html from 'user_accounts' app -->
+{% block head %} 
+    <title>"Reddit"</title>
+{% endblock %}
+
+
+
+{% block body %}
+    <div class="container">
+		 <form method= "post">
+            {% csrf_token %} 
+            {{ create_post_form.as_p }} 
+            <button type= "submit" name=" button">Save</button> 
+        </form>
+    </div>
+{% endblock %}
+
+

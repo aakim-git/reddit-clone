@@ -1,0 +1,141 @@
+{% extends 'base.html' %} <!-- base.html from 'user_accounts' app -->
+{% block head %} 
+    <title>"Reddit"</title>
+    <style>
+        .rank {
+            background-color: #c0c0c0;
+            height: 60px;
+            width: 36px;
+        }
+
+        .votes{
+            margin: 0 20px 0 15px;
+        }
+
+        .votes * {
+            background-color: #e1e1e1;
+            height: 31px;
+            width: 25px;
+            padding: 9px 0 0 6px;
+            font-size: 13px;
+        }
+
+        .upvote {
+            border-radius: 5px 5px 0 0;
+        }
+
+        .downvote {
+            border-radius: 0 0 5px 5px;
+        }
+
+        .post {
+            word-wrap: break-word;
+        }
+
+        #num_comments_pane {
+            margin: 10px 10px 0 0;
+            border-bottom: 1px solid #e4e4e4;
+            padding-bottom: 10px;
+        }
+
+        #sort_by_pane {
+            margin-right: 10px;
+            border-top: 1px solid #e4e4e4;
+            padding-top: 10px;
+            font-size: 12px;
+            font-weight: 400;
+        }
+
+        #comment_submit_area {
+            margin: 20px 0 0 0;
+            height: 30vh;
+            width: 100%;
+            padding: 20px 0 0 20px;
+            border-radius: 5px 5px 5px 5px;
+            background-color: white;
+            border: 1px solid #ddd !important;
+            box-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+        }
+
+        #comment_box {
+            box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+            height: 100px;
+            width:500px;
+            border: 2px solid #ddd !important;
+            border-radius: 0;
+            background: #fff;
+        }
+
+        #submit_comment {
+            margin: 10px 0 0 0;
+            font-size: .825em;
+            text-decoration: none;
+            font-weight: 700;
+            padding: .35em 1em;
+            background-color: #eaeef1;
+            background-image: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,.1));
+            border-radius: 3px;
+            color: rgba(0,0,0,.6);
+            text-shadow: 0 1px 1px rgba(255,255,255,.7);
+            box-shadow: 0 0 0 1px rgba(0,0,0,.2), 0 1px 2px rgba(0,0,0,.2), inset 0 1px 2px rgba(255,255,255,.7);
+        }
+
+        #submit_comment:hover {
+            background-color: #fff;
+        }
+
+        #submit_comment:active, #submit_comment:focus {
+            background-color: #d0d3d6;
+	        background-image: linear-gradient(rgba(0,0,0,.1), rgba(0,0,0,0));
+	        box-shadow: inset 0 0 2px rgba(0,0,0,.2), inset 0 2px 5px rgba(0,0,0,.2), 0 1px rgba(255,255,255,.2);
+        }
+    </style>
+
+    <script type="text/javascript" src="/static/home/vote_buttons.js"></script>
+
+{% endblock %}
+
+{% block body %}
+    <div class="body">
+        <div class="container">
+            <div class="content row container pt-4">
+                <div class="rank col-xx-1 rounded mt-2">
+                    <div class="text-white text-center mx-auto mt-3">{{ post.points }}</div>
+                </div>
+
+                <div class="votes col-xx-1 d-inline-flex flex-column mt-2">
+					<i onclick="upvote(this.parentNode, {{ post.post_id }}, {{ cur_user }})" class="upvote fa fa-arrow-up mx-auto" aria-hidden="true"></i>
+					<i onclick="downvote(this.parentNode, {{ post.post_id }}, {{ cur_user }})" class="downvote fa fa-arrow-down mx-auto" aria-hidden="true"></i>
+					<script>update_vote(document.currentScript.parentNode, {{vote}} )</script>
+				</div>
+
+                <div class="entry col-sm-10" style="border-left: 2px solid #95b2d6">
+                    <h3 style="font-size:1.5em" class="text-primary mb-0"> <a href="/home/p/2/">{{ post.title }}</a> </h3>
+                    <p class="mb-0" style="font-size:0.8em"> submitted by: <a href="{% url 'user_accounts:profile_with_pk' pk=post.user.pk %}">{{ post.user.username  }}</a>   {{ post.created }} </p>
+                    <p style="font-size:0.8em"> 0 comments</p>
+
+                    <div class="rounded border border-info bg-light">
+                        <div class=" post pb-1 pl-2">{{ post.post_content }}<br /></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="num_comments_pane">all 106 comments</div>
+            <div id="sort_by_pane">sorted by: new(suggested)</div>
+            <div id="comment_submit_area">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ submit_comment_form.as_p }}
+                    <input type="submit" id="submit_comment" value="Submit">
+                </form>
+            </div>
+
+            <div id="comments_area">
+				{% for comment in comments %}
+					<div id = "comment">{{comment.comment_text}}</div>
+				{% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

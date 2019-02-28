@@ -14,6 +14,8 @@ class Post(models.Model):
     votes = models.ManyToManyField('Vote', related_name = 'vote_list')
     points = models.IntegerField(default = 0)
 	
+    comments = models.ManyToManyField('Comment', related_name = 'comment_list')
+	
 class Vote(models.Model):
     voter = models.ForeignKey(User, on_delete=models.PROTECT)
     vote = models.IntegerField(default = 0)
