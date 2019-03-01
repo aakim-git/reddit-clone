@@ -10,6 +10,17 @@
 		{% block head %} 
 		{% endblock %}
         <style>
+			a {
+				color: #0060B6;
+				text-decoration: none;
+			}
+
+			a:hover {
+				 color:#00A0C6; 
+				 text-decoration:none; 
+				 cursor:pointer;  
+			}
+		
             .main {
                 border-bottom: 2px solid #95b2d6;
                 background-color: rgba(0, 0, 0, 0.7) !important;
@@ -38,6 +49,7 @@
 			}
 			
 			#header{
+				position:relative;
 				font-family: Verdana;
 				font-size: 14px;
 				text-align: center;
@@ -56,6 +68,13 @@
 				color: white;
 				background-color: #e76b23;
 				width:10%;
+			}
+			#header-right{
+				position: relative;
+				right:-53%;
+				background-color: #e76b23;
+				width:25.1%;
+				box-shadow: 1 0 1px rgba(0, 0, 0, 0.1), 0 1px 1px rgba(0, 0, 0, 0.1);
 			}
         </style>
 		
@@ -89,7 +108,8 @@
 			
 			<div id = "header" class = "row">
 				<div id = "header-left"> Welcome! </div>
-				<div id = "header-right"> ~  Your text here  ~</div>
+				<div id = "header-center"> ~  Your text here  ~</div>
+				<div id = "header-right"> &nbsp; </div>
 				
 			</div>
         </div>

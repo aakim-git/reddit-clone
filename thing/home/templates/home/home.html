@@ -7,11 +7,8 @@
 		    background-color: #f0f0f0;
 		}
 		
-		#entry-div{
-			border-bottom: 1px solid #f0f0f0;
-		}
 		
-		#post-div{
+		#post-panel{
 			background-color: white;
 		}
 		
@@ -20,7 +17,7 @@
 		}
 		
 		#entry{
-			border-left: 3px solid #c0c0c0;
+			border-left: 3px solid #e1e1e1;
 			-moz-transition: all 0.2s;
 			-webkit-transition: all 0.2s;
 			transition: all 1s;
@@ -52,12 +49,39 @@
             border-radius: 0 0 5px 5px;
         }
 		
-		#options-div{
-			background-color: white;
-			border-bottom: 5px;
-			border-right: 5px;
-		
+		#options-panel{
+			background-color: #f0f0f0;
+			height:50%;
+			box-shadow: 1px 0 1px rgba(0, 0, 0, 0.1), 0 1px 1px rgba(0, 0, 0, 0.1);
+		    padding: 0 0 0 0 !important;
 		}
+		
+		#submit-button{
+			height:15%;
+			padding: 7px 0 0 15px;
+			display: block;
+			border-top: 1px solid #f9f9f9;
+			border-bottom: 1px solid #ddd;
+			border-right: 1px solid #ddd;
+			letter-spacing: 0;
+			font-size: 18px;
+			color: #777;
+			transition: 0;
+		}
+		
+		#submit-button:hover > *{
+			color: #9dd9f9;
+		}
+		
+		#submit-button-button{
+			color: #4c4c4c;
+			font-family: Verdana;
+		}
+		
+		#single-post{
+			padding-right: 0 !important;
+		}
+		
     </style>
 
     {% load static %}
@@ -70,10 +94,10 @@
 {% block body %}
     <div class="container">
         <div class="content row">
-            <div id = "post-div" class="col-md-9">
+            <div id = "post-panel" class="col-md-9">
                 {% for post,vote in posts %}
-                <div  class="row container">
-                    <div id = "vote-div" class="row col-2 pt-3">
+                <div  id = "single-post" class="row container">
+                    <div id = "vote-div" class="col-auto row pt-3">
 						<div class = "rank .col-6 .col-sm-2 pt-3 rounded text-white text-center">
 							{{ post.points }}
 						</div>
@@ -83,9 +107,11 @@
 							<i onclick="downvote(this.parentNode, {{ post.post_id }}, {{cur_user}})" class="downvote fa fa-arrow-down mx-auto" aria-hidden="true"></i>
 							<script>update_vote(document.currentScript.parentNode, {{vote}} )</script>
 						</div>
+						
+						<div id = "spacer" class = "pl-3"></div>
 					</div>
 
-                    <div id = "entry-div" class="col-9 ml-3 pl-3 pt-3">
+                    <div id = "entry-div" class="col ml-3 pl-3 pt-3">
 						<div id = "entry" class ="pl-3">
 							<h3 style="font-size:1.5em" class="text-primary mb-0"> <a href="{% url 'home:post' post_id=post.post_id %}">{{post.title}}</a> </h3>
 							<p class="mb-0" style="font-size:0.8em"> submitted by: <a href="{% url 'user_accounts:profile_with_pk' pk=post.user.pk %}">{{ post.user.username }}</a>   at {{post.created}} </p>
@@ -102,8 +128,11 @@
             </div>
 
 
-            <div id = "options-div" class="col-md-3">
-                <h3 style="font-size:1.3em;" class="text-primary pl-4"><a href="{% url 'home:create_post' %}">Submit a Post</a></h3>
+            <div id = "options-panel" class="col-md-3">
+                <div id = "submit-button">
+					<div class="fas fa-pen"></div>
+					<a class = "ml-2" id = "submit-button-button" href="{% url 'home:create_post' %}">submit a post</a>
+				</div>
             </div>
 
         </div>
