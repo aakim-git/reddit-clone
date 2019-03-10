@@ -30,6 +30,10 @@
         }
 		
 		#post-panel{
+			background-color: #eaeaea;
+		}
+		
+		#entry-div{
 			background-color: white;
 		}
 		
@@ -48,8 +52,10 @@
 			border-left: 3px solid #9b9b9b;
 		}
 		
-        .post {
+        #post {
             word-wrap: break-word;
+			width: auto;
+			padding-right:0px;
         }
 
 		.entry {
@@ -92,38 +98,28 @@
 
         #submit_comment {
             margin: 10px 0 0 0;
-			font-family: Verdana;
             font-size: .825em;
-            text-decoration: none;
             font-weight: 700;
             padding: .35em 1em;
-            background-color: #eaeef1;
-            background-image: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,.1));
+			border: none;
+            background-color: #3f7de2;
             border-radius: 3px;
-            color: rgba(0,0,0,.6);
-            text-shadow: 0 1px 1px rgba(255,255,255,.7);
-            box-shadow: 0 0 0 1px rgba(0,0,0,.2), 0 1px 2px rgba(0,0,0,.2), inset 0 1px 2px rgba(255,255,255,.7);
+            color: white;
         }
 
         #submit_comment:hover {
-            background-color: #fff;
-        }
-
-        #submit_comment:active, #submit_comment:focus {
-            background-color: #d0d3d6;
-	        background-image: linear-gradient(rgba(0,0,0,.1), rgba(0,0,0,0));
-	        box-shadow: inset 0 0 2px rgba(0,0,0,.2), inset 0 2px 5px rgba(0,0,0,.2), 0 1px rgba(255,255,255,.2);
+            background-color: #2a5396;
         }
 		
 		#options-panel{
 			background-color: #f0f0f0;
-			height:50%;
+			height:20rem;
 			box-shadow: 1px 0 1px rgba(0, 0, 0, 0.1), 0 1px 1px rgba(0, 0, 0, 0.1);
 		    padding: 0 0 0 0 !important;
 		}
 		
 		#submit-button{
-			height:15%;
+			height:3rem;
 			padding: 7px 0 0 15px;
 			display: block;
 			border-top: 1px solid #f9f9f9;
@@ -143,10 +139,70 @@
 			color: #4c4c4c;
 			font-family: Verdana;
 		}
+		
+		#comments_area{
+			padding-top:1rem;
+		}
+		
+		* #comment {
+			padding: 1rem 0 1rem 0.5rem;
+			margin-top:2px;
+			font-family: Verdana;
+			font-size: 14px;
+            font-weight: 400;
+			background-color: white;
+			border-radius: 5px 5px 5px 5px;
+			box-shadow: 1px 0 1px rgba(0, 0, 0, 0.1), 0 1px 1px rgba(0, 0, 0, 0.1);
+		}
+		
+		#comment_votes{
+			padding-top:0.5rem;
+		}
+		
+		#comment_buttons{
+			color: #c9c9c9;
+			font-size: 11px;
+			margin-bottom:0.5rem;
+		}
+		
+		#comment_buttons span:hover{
+			color: #595959;
+			cursor: pointer;
+			text-decoration: underline;
+		}
+		
+		#tagline{
+			color: #848484;
+			font-size: 11px;
+		}
+		
+		#comment *{
+			margin-bottom: 0;
+		}
+		
+		#cancel{
+		    margin: 10px 0 0 0;
+            font-size: .825em;
+            font-weight: 700;
+            padding: .35em 1em;
+			border: none;
+            background-color: #e2802f;
+            border-radius: 3px;
+            color: white;
+		}
+		
+		#cancel:hover{
+			background-color: #2a5396;
+		}
+		
+		#comment_comment_form form{
+			margin-top:0.5rem;
+			display: none;
+		}
     </style>
 
     <script type="text/javascript" src="/static/home/vote_buttons.js"></script>
-
+    <script type="text/javascript" src="/static/home/view_post.js"></script>
 {% endblock %}
 
 {% block body %}
@@ -176,14 +232,12 @@
 							<div class="rounded border border-info bg-light mt-2">
 								<div class=" post pb-1 pl-2">{{ post.post_content }}<br /></div>
 							</div>
-							<p class = "mt-1" style="font-size:0.8em"> 0 comments</p>
+							<p class = "mt-1" style="font-size:0.8em"> {{ comments|length }} comments</p>
 						</div>
-						
-
 					</div>
 				</div>
 
-				<div id="num_comments_pane">all 106 comments</div>
+				<div id="num_comments_pane">all {{ comments|length }} comments</div>
 				<div id="sort_by_pane">sorted by: new(suggested)</div>
 				<div id="comment_submit_area">
 					<form method="post">
@@ -193,10 +247,39 @@
 					</form>
 				</div>
 
+				{% load mptt_tags %}
 				<div id="comments_area">
-					{% for comment in comments %}
-						<div id = "comment">{{comment.comment_text}}</div>
-					{% endfor %}
+					{% recursetree comments %}
+					    <div id = "comment" class = "row">
+							<div id = "comment_votes" class=".col-6 .col-sm-10 ml-3 mr-3 d-inline-flex flex-column">
+								<i onclick="upvote(this.parentNode, {{ post.post_id }}, {{cur_user}})" class="upvote fa fa-caret-up mx-auto" aria-hidden="true"></i>
+								<i onclick="downvote(this.parentNode, {{ post.post_id }}, {{cur_user}})" class="downvote fa fa-caret-down mx-auto" aria-hidden="true"></i>
+								<script>update_vote(document.currentScript.parentNode, {{vote}} )</script>
+							</div>
+							
+							<div id = "comment_body" class = ".col-6">
+								<p id = "tagline"><a href="{% url 'user_accounts:profile_with_pk' pk=node.author.pk %}" class = "font-weight-bold">{{ node.author.username }}</a> {{node.points}} points at {{node.created}}</p>
+								<p id = "comment_text">{{node.comment_text}}</p>
+								<p id = "comment_buttons">
+									<span onclick = "show_comment_form(this.parentElement)">reply</span>
+								</p>
+								<div id = "comment_comment_form">
+									<form method="post">
+										{% csrf_token %}
+										{{ submit_comment_form.text }} </br>
+										<input type="hidden" value="{{ node.id }}" name="parent_id">
+										<input type="submit" id="submit_comment" value="Submit">
+										<button id="cancel" onclick = "hide_comment_form(this.parentElement)">Cancel</button>
+									</form> 	
+								</div>
+							</div>
+						</div>
+						{% if not node.is_leaf_node %}
+						    <div id = "comment_replies" class = "ml-4">
+							    {{ children }}
+							</div>
+						{% endif %}
+					{% endrecursetree %}
 				</div>
 		
 			</div>

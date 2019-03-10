@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.urls import reverse
 from django.contrib.auth.models import User
+from mptt.models import MPTTModel
 
 from home.models import Post, Vote, Comment
 from home.forms import create_post_form, submit_comment_form
@@ -33,22 +34,36 @@ def create_post_view(request):
 			
 def post_view(request, post_id):
     target_post = Post.objects.get(post_id = post_id)
+
 	# user submitted a comment
     if(request.method == 'POST'):
-        new_comment = Comment(author = request.user, comment_text = request.POST['text'])
-        new_comment.save()
-        target_post.comments.add(new_comment)
+
+        # comment is a reply to another comment
+        if request.POST.get('parent_id'):
+            parent_comment = Comment.objects.get(id = request.POST.get('parent_id'))
+            new_comment = Comment(author = request.user, comment_text = request.POST['text'], parent = parent_comment)
+            new_comment.save()
+
+        # top level comment
+        else:
+            new_comment = Comment(author = request.user, comment_text = request.POST['text'])
+            new_comment.save()
+            target_post.comments.add(new_comment)
 		
-		
+
     vote = 0
-	
     find_vote = target_post.votes.all().filter(voter = request.user)
     if len(find_vote) > 0:
 	    vote = find_vote[0].vote
+
+    comments = target_post.comments.all()
+    threaded_comments = Comment.objects.none()
+    for i in comments:
+        threaded_comments = threaded_comments | i.get_descendants(True)
 		
-    args = {'post':target_post, 'submit_comment_form':submit_comment_form(), 'cur_user':request.user.id, 'vote': vote, 'comments':target_post.comments.all()}
+    args = {'post':target_post, 'submit_comment_form':submit_comment_form(), 'cur_user':request.user.id, 'vote': vote, 'comments':threaded_comments}
     return render(request, 'home/post.html', args)
-	
+			
 def post_vote(request):
     if request.method == 'POST':
         target_post = Post.objects.get(post_id = request.POST['id'])

@@ -4,9 +4,6 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'x=y)fl^x31f)ekx!+-yfad&f2ll()!&&8sk)(groz9q0ozhs9j'
 
@@ -21,6 +18,7 @@ ALLOWED_HOSTS = ['127.0.0.1','http://qwee.pythonanywhere.com/']
 INSTALLED_APPS = [
     'user_accounts', 
     'home',
+    'mptt',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
