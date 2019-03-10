@@ -24,5 +24,8 @@ class submit_comment_form(forms.ModelForm):
 			'text'
 		} 
 
+    def __init__(self, *args, **kwargs):
+        super(submit_comment_form, self).__init__(*args, **kwargs)
+        self.fields['text'].widget.attrs.update({'class' : 'submit_comment_form'})
 
 
