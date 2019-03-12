@@ -1,0 +1,5 @@
+To run the website locally:
+1. Pull the code
+2. ./manage.py migrate --fake <app-name> zero
+3. ./manage.py makemigrations
+4. ./manage.py migrate
